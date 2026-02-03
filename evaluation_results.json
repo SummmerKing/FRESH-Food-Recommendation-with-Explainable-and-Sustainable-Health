@@ -1,0 +1,125 @@
+{
+  "queries": [
+    {
+      "query": "high protein breakfast",
+      "metrics": {
+        "ndcg": 1.0,
+        "precision": 1.0,
+        "map": 0.5,
+        "mrr": 1.0,
+        "total_recipes": 9,
+        "total_relevant": 9,
+        "safety_rate": 1.0
+      },
+      "per_meal": {
+        "breakfast": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "num_recipes": 3,
+          "num_relevant": 3
+        },
+        "lunch": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "num_recipes": 3,
+          "num_relevant": 3
+        },
+        "dinner": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "num_recipes": 3,
+          "num_relevant": 3
+        }
+      }
+    },
+    {
+      "query": "low carb dinner",
+      "metrics": {
+        "ndcg": 1.0,
+        "precision": 1.0,
+        "map": 0.5,
+        "mrr": 1.0,
+        "total_recipes": 9,
+        "total_relevant": 9,
+        "safety_rate": 1.0
+      },
+      "per_meal": {
+        "breakfast": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "num_recipes": 3,
+          "num_relevant": 3
+        },
+        "lunch": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "num_recipes": 3,
+          "num_relevant": 3
+        },
+        "dinner": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "num_recipes": 3,
+          "num_relevant": 3
+        }
+      }
+    },
+    {
+      "query": "quick vegan lunch",
+      "metrics": {
+        "ndcg": 1.0,
+        "precision": 1.0,
+        "map": 0.5,
+        "mrr": 1.0,
+        "total_recipes": 9,
+        "total_relevant": 9,
+        "safety_rate": 1.0
+      },
+      "per_meal": {
+        "breakfast": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "num_recipes": 3,
+          "num_relevant": 3
+        },
+        "lunch": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "num_recipes": 3,
+          "num_relevant": 3
+        },
+        "dinner": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "num_recipes": 3,
+          "num_relevant": 3
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "mean_ndcg": 1.0,
+    "mean_precision": 1.0,
+    "mean_mrr": 1.0,
+    "mean_safety_rate": 1.0,
+    "num_queries": 3
+  }
+}

@@ -1,0 +1,95 @@
+2025-11-08 12:34:43,053 - INFO - ======================================================================
+2025-11-08 12:34:43,053 - INFO - Starting Embedding Generation Pipeline
+2025-11-08 12:34:43,053 - INFO - ======================================================================
+2025-11-08 12:34:43,053 - INFO - Loading model: all-MiniLM-L6-v2
+2025-11-08 12:34:43,329 - INFO - Use pytorch device_name: cuda:0
+2025-11-08 12:34:43,330 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-11-08 12:35:00,822 - INFO - Model loaded. Embedding dimension: 384
+2025-11-08 12:35:00,822 - INFO - Loading recipes from: /data1/home/sathvik/Documents/FRESH/recipes_metadata_FINAL.json
+2025-11-08 12:35:19,683 - INFO - Loaded 689,000 recipes
+2025-11-08 12:35:19,683 - INFO - Creating text representations...
+2025-11-08 12:35:19,694 - INFO - 
+Sample 1:
+2025-11-08 12:35:19,694 - INFO -   Recipe: Smothered Round Steak(Servings: 4)
+2025-11-08 12:35:19,694 - INFO -   Text: dinner dinner Smothered Round Steak(Servings: 4) non-vegetarian sat four be peppers round white pepper steak beef stock ceery round red pepper round back pepper veetabe oi dinner onions round back pep...
+2025-11-08 12:35:19,694 - INFO - 
+Sample 2:
+2025-11-08 12:35:19,694 - INFO -   Recipe: Corral Barbecued Beef Steak Strips
+2025-11-08 12:35:19,694 - INFO -   Text: dinner dinner Corral Barbecued Beef Steak Strips vegan vegetarian non-vegetarian tomato sauce cookin oi brown suar mustard water onion worcestershire sauce strips water dinner mustard vegan...
+2025-11-08 12:35:19,694 - INFO - 
+Sample 3:
+2025-11-08 12:35:19,694 - INFO -   Recipe: Creamy Coleslaw(Better Homes And Gardens)
+2025-11-08 12:35:19,695 - INFO -   Text: dinner dinner Creamy Coleslaw(Better Homes And Gardens) vegan vegetarian sat carrots vinear suar cabbae reen pepper ceery onion mayonnaise suar dinner reen pepper vinear vegan...
+2025-11-08 12:35:21,849 - INFO - 
+Generating embeddings (batch_size=256)...
+2025-11-08 12:38:02,114 - INFO - Generated embeddings shape: (689000, 384)
+2025-11-08 12:38:02,114 - INFO - Normalizing vectors...
+2025-11-08 12:38:03,203 - INFO - Sample vector norms (should be ~1.0): [1. 1. 1. 1. 1.]
+2025-11-08 12:38:03,203 - WARNING - FAISS not available. Skipping index creation.
+2025-11-08 12:38:03,203 - WARNING - Install with: pip install faiss-cpu  or  pip install faiss-gpu
+2025-11-08 12:38:03,203 - INFO - 
+Saving artifacts...
+2025-11-08 12:38:03,534 - INFO -   ✓ Saved recipe IDs: /data1/home/sathvik/Documents/FRESH/recipe_ids_FINAL.npy
+2025-11-08 12:38:04,011 - INFO -   ✓ Saved vectors: /data1/home/sathvik/Documents/FRESH/recipe_vectors_FINAL.npy
+2025-11-08 12:38:04,012 - INFO -   ✓ Saved report: /data1/home/sathvik/Documents/FRESH/embedding_report.json
+2025-11-08 12:38:04,012 - INFO - 
+======================================================================
+2025-11-08 12:38:04,012 - INFO - Embedding Generation Complete!
+2025-11-08 12:38:04,012 - INFO - ======================================================================
+2025-11-08 12:38:04,012 - INFO - Total recipes: 689,000
+2025-11-08 12:38:04,012 - INFO - Embedding dimension: 384
+2025-11-08 12:38:04,012 - INFO - Generation time: 201.0s (3428.6 recipes/sec)
+2025-11-08 12:38:04,012 - INFO - Files created:
+2025-11-08 12:38:04,012 - INFO -   - /data1/home/sathvik/Documents/FRESH/recipe_ids_FINAL.npy
+2025-11-08 12:38:04,012 - INFO -   - /data1/home/sathvik/Documents/FRESH/recipe_vectors_FINAL.npy
+2025-11-08 12:38:04,012 - INFO -   - /data1/home/sathvik/Documents/FRESH/embedding_report.json
+2025-11-08 12:39:07,294 - INFO - 
+======================================================================
+2025-11-08 12:39:07,294 - INFO - Verifying Embeddings with Sample Queries
+2025-11-08 12:39:07,294 - INFO - ======================================================================
+2025-11-08 12:39:07,672 - INFO - Loaded 689,000 recipe IDs
+2025-11-08 12:39:07,672 - INFO - Loaded vectors with shape: (689000, 384)
+2025-11-08 12:39:08,279 - INFO - 
+Testing sample queries:
+2025-11-08 12:39:08,279 - INFO - 
+📝 Query: 'indian breakfast dosa'
+2025-11-08 12:39:08,673 - INFO -   Top 5 matches:
+2025-11-08 12:39:08,673 - INFO -     1. Dosas(Indian Flat Bread) (breakfast) - Score: 0.718
+2025-11-08 12:39:08,673 - INFO -     2. Indian Crisp Rice Pancake (Dosa) (breakfast) - Score: 0.690
+2025-11-08 12:39:08,673 - INFO -     3. Mulligatawny Soup - World Class (East Indian) (breakfast) - Score: 0.661
+2025-11-08 12:39:08,673 - INFO -     4. How To Make A South Indian Dosa (breakfast) - Score: 0.658
+2025-11-08 12:39:08,673 - INFO -     5. Dosas (Indian-Style Pancakes) (breakfast) - Score: 0.657
+2025-11-08 12:39:08,673 - INFO - 
+📝 Query: 'quick dinner pasta'
+2025-11-08 12:39:08,967 - INFO -   Top 5 matches:
+2025-11-08 12:39:08,967 - INFO -     1. Quick 'n' Easy Italian Chicken & Pasta for Two (dinner) - Score: 0.748
+2025-11-08 12:39:08,968 - INFO -     2. Quick 'N Easy Pasta Dinner (dinner) - Score: 0.742
+2025-11-08 12:39:08,968 - INFO -     3. Easy-Quick Spaghetti For 2 (dinner) - Score: 0.721
+2025-11-08 12:39:08,968 - INFO -     4. Quick 'N Easy Pasta Bolognese (lunch) - Score: 0.717
+2025-11-08 12:39:08,968 - INFO -     5. Quick Dinner: Easy One Pot Parmesan Garlic Pasta Recipe (dinner) - Score: 0.707
+2025-11-08 12:39:08,968 - INFO - 
+📝 Query: 'vegetarian paneer curry'
+2025-11-08 12:39:09,262 - INFO -   Top 5 matches:
+2025-11-08 12:39:09,262 - INFO -     1. Paneer 65 Recipe - Restaurant Style (dinner) - Score: 0.791
+2025-11-08 12:39:09,262 - INFO -     2. Palak Paneer (Indian Spinach And Paneer) (dinner) - Score: 0.759
+2025-11-08 12:39:09,262 - INFO -     3. Paneer Tikka Sandwich (lunch) - Score: 0.733
+2025-11-08 12:39:09,262 - INFO -     4. Saag Paneer (Panir) - Indian Spinach And Cheese (dinner) - Score: 0.732
+2025-11-08 12:39:09,262 - INFO -     5. Paneer Achariya ( Pickle Style Paneer Stir Fry) (dinner) - Score: 0.731
+2025-11-08 12:39:09,262 - INFO - 
+📝 Query: 'chocolate dessert cake'
+2025-11-08 12:39:09,558 - INFO -   Top 5 matches:
+2025-11-08 12:39:09,558 - INFO -     1. Best Ever Chocolate Cake - Recipe (dessert) - Score: 0.747
+2025-11-08 12:39:09,558 - INFO -     2. Chocolate Cake For Chocolate Lovers (dessert) - Score: 0.738
+2025-11-08 12:39:09,558 - INFO -     3. Chocolate Cake for a Grown-Up Valentine's Day (dessert) - Score: 0.735
+2025-11-08 12:39:09,558 - INFO -     4. Old Fashioned Chocolate Cake With Glossy Chocolate Icing (dessert) - Score: 0.734
+2025-11-08 12:39:09,558 - INFO -     5. Best Chocolate Cake  With Caramel Icing (dessert) - Score: 0.734
+2025-11-08 12:39:09,558 - INFO - 
+📝 Query: 'healthy lunch salad'
+2025-11-08 12:39:09,854 - INFO -   Top 5 matches:
+2025-11-08 12:39:09,854 - INFO -     1. Salad With Cream Dressing (lunch) - Score: 0.772
+2025-11-08 12:39:09,854 - INFO -     2. "27" Vegetable Salad With Jean Georges Recipe (lunch) - Score: 0.761
+2025-11-08 12:39:09,854 - INFO -     3. Versatile Cooked Salad Dressing (Potato/Pasta Salad, Colesla (lunch) - Score: 0.756
+2025-11-08 12:39:09,854 - INFO -     4. Chopped Vegetable Salad With Buttermilk Dressing (lunch) - Score: 0.747
+2025-11-08 12:39:09,854 - INFO -     5. Layered Salad(Serves 8 To 10) (lunch) - Score: 0.744
+2025-11-08 12:39:09,854 - INFO - 
+✓ Verification complete!

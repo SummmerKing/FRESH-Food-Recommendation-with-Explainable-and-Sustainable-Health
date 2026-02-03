@@ -1,0 +1,27 @@
+# --- System & IDE ---
+__pycache__/
+.vscode/
+
+# --- Large Models & Weights (DO NOT COMMIT) ---
+*.pth
+*.pt
+*.faiss
+*.pkl
+*.npy
+vectors/
+
+# --- Datasets & Books ---
+data/
+global dataset/
+Nutrition books/
+snli_1.0/
+Metadata/
+
+# --- Generated Metadata/JSONs ---
+# (Keeping small configs is fine, but ignoring huge data dumps)
+claude_recipes_metadata_*.json
+pantry_database.json
+target_chapters_chunks.json
+
+# --- Reports ---
+*.docx

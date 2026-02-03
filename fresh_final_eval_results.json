@@ -1,0 +1,92 @@
+{
+  "auto_mode": {
+    "queries": [
+      {
+        "id": "AUTO_VEGAN",
+        "metrics": {
+          "ndcg": 1.0,
+          "precision": 0.0,
+          "map": 0.20000000000000004,
+          "mrr": 0.0,
+          "total_recipes": 9,
+          "total_relevant": 0,
+          "safety_rate": 0.0
+        }
+      },
+      {
+        "id": "AUTO_INDIAN_VEG",
+        "metrics": {
+          "ndcg": 1.0,
+          "precision": 0.0,
+          "map": 0.4000000000000001,
+          "mrr": 0.0,
+          "total_recipes": 9,
+          "total_relevant": 0,
+          "safety_rate": 0.0
+        }
+      },
+      {
+        "id": "Sathvik",
+        "metrics": {
+          "ndcg": 0.9883984898671475,
+          "precision": 0.0,
+          "map": 0.38148148148148153,
+          "mrr": 0.0,
+          "total_recipes": 9,
+          "total_relevant": 0,
+          "safety_rate": 0.0
+        }
+      }
+    ],
+    "aggregate": {
+      "mean_ndcg": 0.9961328299557158,
+      "mean_precision": 0.0,
+      "mean_safety": 0.0
+    }
+  },
+  "smart_mode": {
+    "queries": [
+      {
+        "id": "SMART_COLD_FLU",
+        "metrics": {
+          "ndcg": 0.9671743118887145,
+          "precision": 1.0,
+          "map": 0.9185185185185185,
+          "mrr": 1.0,
+          "total_recipes": 9,
+          "total_relevant": 9,
+          "safety_rate": 1.0
+        }
+      },
+      {
+        "id": "SMART_MUSCLE_BUILD",
+        "metrics": {
+          "ndcg": 0.9216362460304195,
+          "precision": 0.6666666666666666,
+          "map": 0.6888888888888888,
+          "mrr": 1.0,
+          "total_recipes": 9,
+          "total_relevant": 7,
+          "safety_rate": 0.7777777777777778
+        }
+      },
+      {
+        "id": "Indian",
+        "metrics": {
+          "ndcg": 1.0,
+          "precision": 1.0,
+          "map": 1.0,
+          "mrr": 1.0,
+          "total_recipes": 9,
+          "total_relevant": 9,
+          "safety_rate": 1.0
+        }
+      }
+    ],
+    "aggregate": {
+      "mean_ndcg": 0.9629368526397113,
+      "mean_precision": 0.8888888888888888,
+      "mean_safety": 0.9259259259259259
+    }
+  }
+}

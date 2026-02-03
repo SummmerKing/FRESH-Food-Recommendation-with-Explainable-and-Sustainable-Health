@@ -1,0 +1,4 @@
+Scenario,Input Type,P@5,NDCG@5
+Auto Mode: Vegan User,auto,0.0,0.0
+Smart Mode: High Protein Gym User,smart,0.0,0.0
+Auto Mode: Indian Family (Vegetarian),auto,0.0,0.0

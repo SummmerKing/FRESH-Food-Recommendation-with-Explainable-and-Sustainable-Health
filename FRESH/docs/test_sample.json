@@ -1,0 +1,9 @@
+{
+  "user_id": "test_user_01",
+  "diet": "veg",
+  "allergies": [],
+  "dislikes": [],
+  "time_budget": {"breakfast": 15, "lunch": 30, "dinner": 30},
+  "pantry": ["rice", "onion", "tomato"],
+  "likes": []
+}

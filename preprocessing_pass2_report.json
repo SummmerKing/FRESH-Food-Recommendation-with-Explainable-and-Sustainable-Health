@@ -1,0 +1,47 @@
+{
+  "preprocessing_pass": 2,
+  "date": "2025-11-08T12:31:18.634518",
+  "statistics": {
+    "input_recipes": 1177637,
+    "after_ingredient_validation": 1171952,
+    "low_quality_removed": 212,
+    "after_quality_filter": 1171740,
+    "sampled_dinner": 277085,
+    "sampled_lunch": 17372,
+    "sampled_dessert": 74301,
+    "sampled_breakfast": 113155,
+    "sampled_snack": 827,
+    "after_balancing": 689000
+  },
+  "final_data_quality": {
+    "total_recipes": 689000,
+    "meal_type_distribution": {
+      "dinner": 250000,
+      "lunch": 120000,
+      "dessert": 100000,
+      "breakfast": 200000,
+      "snack": 19000
+    },
+    "diet_distribution": {
+      "non-vegetarian": 449246,
+      "vegan": 209115,
+      "vegetarian": 469679
+    },
+    "time_distribution": {
+      "10-15min": 6298,
+      "15-30min": 354764,
+      "30-60min": 205122,
+      "60-90min": 114067,
+      "90+min": 8749
+    },
+    "quality_distribution": {
+      "excellent": 689000,
+      "good": 0,
+      "fair": 0,
+      "poor": 0
+    },
+    "avg_quality_score": 11.778692307692308,
+    "recipes_with_keywords": 689000,
+    "avg_ingredients_per_recipe": 8.932542815674891
+  }
+}

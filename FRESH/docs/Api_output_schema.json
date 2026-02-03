@@ -1,0 +1,41 @@
+{
+  "user_id": "test_user_01",
+  "plan": {
+    "breakfast": {
+      "recipe_id":"r007",
+      "title":"Eggs in Clouds",
+      "diet":["gluten free","nut free"],
+      "used_ingredients":["eggs","parmesan cheese","onion"],
+      "missing_ingredients":["chives"],
+      "time": 11,
+      "over_time": false,
+      "score": 0.76
+    },
+    "lunch": {
+      "recipe_id":"r003",
+      "title":"Channa Masala",
+      "diet":["veg","gluten free"],
+      "used_ingredients":["onions","garlic","tomatoes"],
+      "missing_ingredients":["coriander","amchoor powder"],
+      "time": 40,
+      "over_time": true,
+      "score": 0.65
+    },
+    "dinner": {
+      "recipe_id":"r001",
+      "title":"Thandai",
+      "diet":["veg"],
+      "used_ingredients":["almonds","sugar"],
+      "missing_ingredients":["rose water"],
+      "time": 15,
+      "over_time": false,
+      "score": 0.71
+    }
+  },
+  "shopping_list": ["chives","coriander","amchoor powder","rose water"],
+  "explanation": {
+    "breakfast":"Chosen because quick and mostly in pantry.",
+    "lunch":"Channa Masala uses pantry onion and tomato but exceeds 30 min budget.",
+    "dinner":"Thandai fits diet and uses almonds already at home."
+  }
+}

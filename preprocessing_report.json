@@ -1,0 +1,51 @@
+{
+  "preprocessing_date": "2025-11-08T12:23:15.622412",
+  "statistics": {
+    "total_recipes": 2231141,
+    "removed_recipes": 197545,
+    "time_fixed": 81468,
+    "meal_type_fixed": 390742,
+    "ingredients_normalized": 0,
+    "diet_enhanced": 1011931,
+    "duplicates_removed": 855959,
+    "validation_failures": 0
+  },
+  "removal_reasons": {
+    "unrealistic_time_too_low": 197545
+  },
+  "meal_type_changes": {
+    "dinner->dessert": 137400,
+    "breakfast->dessert": 203387,
+    "snack->breakfast": 12225,
+    "lunch->dessert": 8442,
+    "snack->lunch": 22571,
+    "snack->dessert": 3699,
+    "snack->dinner": 2488,
+    "dinner->breakfast": 499,
+    "lunch->breakfast": 31
+  },
+  "data_quality": {
+    "meal_type_distribution": {
+      "dinner": 531054,
+      "lunch": 137678,
+      "dessert": 174886,
+      "breakfast": 314088,
+      "snack": 19931
+    },
+    "diet_distribution": {
+      "vegetarian": 834820,
+      "non-vegetarian": 713635,
+      "vegan": 398808
+    },
+    "time_distribution": {
+      "<15min": 69266,
+      "15-30min": 534006,
+      "30-60min": 271211,
+      "60-120min": 222927,
+      ">120min": 80227
+    },
+    "recipes_with_ingredients": 1177425,
+    "recipes_with_diet_tags": 1177637,
+    "avg_time_minutes": 51.05224699971213
+  }
+}

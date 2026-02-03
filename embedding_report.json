@@ -1,0 +1,13 @@
+{
+  "embedding_dimension": 384,
+  "total_recipes": 689000,
+  "text_representations_created": 689000,
+  "embeddings_generated": 689000,
+  "ids_path": "/data1/home/sathvik/Documents/FRESH/recipe_ids_FINAL.npy",
+  "vectors_path": "/data1/home/sathvik/Documents/FRESH/recipe_vectors_FINAL.npy",
+  "generation_time_seconds": 200.958103,
+  "recipes_per_second": 3428.5753583173505,
+  "model_name": "all-MiniLM-L6-v2",
+  "batch_size": 256,
+  "timestamp": "2025-11-08T12:38:04.011900"
+}

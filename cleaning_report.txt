@@ -1,0 +1,457 @@
+RECIPE DATA CLEANING REPORT
+================================================================================
+
+Total recipes processed: 2231141
+Issues found and fixed: 1415588
+
+BEFORE CLEANING:
+--------------------------------------------------------------------------------
+Diet distribution:
+  vegetarian: 1490031
+  non-vegetarian: 741110
+  vegan: 564811
+
+Meal type distribution:
+  dinner: 1132680
+  breakfast: 807072
+  lunch: 291389
+
+
+DETAILED ISSUES:
+================================================================================
+
+Recipe: Jewell Ball'S Chicken
+ID: 1
+  - Title 'Jewell Ball'S Chicken' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain beef, chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chicken Funny
+ID: 3
+  - Title 'Chicken Funny' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Reeses Cups(Candy)
+ID: 4
+  - Ingredients contain ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Cheeseburger Potato Soup
+ID: 5
+  - Ingredients contain beef, bacon but tagged as vegetarian. Changed to: non-vegetarian
+  - Meal type 'lunch' incorrect for 'Cheeseburger Potato Soup'. Changed to: breakfast
+
+Recipe: Rhubarb Coffee Cake
+ID: 6
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Scalloped Corn
+ID: 7
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Millionaire Pie
+ID: 9
+  - Ingredients contain ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Quick Barbecue Wings
+ID: 12
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Taco Salad Chip Dip
+ID: 13
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Broccoli Salad
+ID: 17
+  - Ingredients contain bacon but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Eggless Milkless Applesauce Cake
+ID: 19
+  - Title 'Eggless Milkless Applesauce Cake' contradicts diet tag. Changed to: non-vegetarian
+
+Recipe: Grandma Hanrath'S Banana Breadfort Collins, Colorado
+ID: 20
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chocolate Frango Mints
+ID: 21
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Cuddy Farms Marinated Turkey
+ID: 22
+  - Title 'Cuddy Farms Marinated Turkey' contradicts diet tag. Changed to: non-vegetarian
+
+Recipe: Prize-Winning Meat Loaf
+ID: 24
+  - Title 'Prize-Winning Meat Loaf' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain beef, egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Smothered Round Steak(Servings: 4)
+ID: 25
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Corral Barbecued Beef Steak Strips
+ID: 26
+  - Title 'Corral Barbecued Beef Steak Strips' contradicts diet tag. Changed to: non-vegetarian
+
+Recipe: Taco-Filled Green Pepper
+ID: 28
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: One Hour Rolls
+ID: 29
+  - Meal type 'dinner' incorrect for 'One Hour Rolls'. Changed to: snack
+
+Recipe: Summer Chicken
+ID: 31
+  - Title 'Summer Chicken' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Potato And Cheese Pie
+ID: 33
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Tuna Macaroni Casserole
+ID: 34
+  - Title 'Tuna Macaroni Casserole' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain tuna but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chicken Stew
+ID: 40
+  - Title 'Chicken Stew' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Quick Coffee Cake(6 Servings)
+ID: 41
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Fruit Pizza
+ID: 44
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chocolate Mint Bars
+ID: 45
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chicken Divan
+ID: 47
+  - Title 'Chicken Divan' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Mexican Cookie Rings
+ID: 48
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Vegetable-Burger Soup
+ID: 49
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chicken Ole
+ID: 50
+  - Title 'Chicken Ole' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Casserole Italiano
+ID: 55
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Corned Beef And Cabbage Casserole
+ID: 56
+  - Title 'Corned Beef And Cabbage Casserole' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Crab Cakes
+ID: 57
+  - Title 'Crab Cakes' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Bonbon Cookies
+ID: 59
+  - Ingredients contain meat, ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Gooey Coffee Cake
+ID: 61
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chicken Casserole
+ID: 63
+  - Title 'Chicken Casserole' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Blueberry Surprise
+ID: 68
+  - Ingredients contain ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Moist Devil'S Food Cake
+ID: 69
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Potato Casserole
+ID: 71
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Divinity Fudge
+ID: 73
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Sausage Balls
+ID: 75
+  - Title 'Sausage Balls' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain sausage but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Consomme Chicken
+ID: 76
+  - Title 'Consomme Chicken' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Spanish Hamburgers
+ID: 77
+  - Title 'Spanish Hamburgers' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Egg Drop Soup
+ID: 78
+  - Title 'Egg Drop Soup' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken, egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Sesame Ginger Chicken
+ID: 80
+  - Title 'Sesame Ginger Chicken' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Egg Casserole
+ID: 81
+  - Title 'Egg Casserole' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Brown Rice
+ID: 83
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Cranberry Salad
+ID: 84
+  - Meal type 'lunch' incorrect for 'Cranberry Salad'. Changed to: breakfast
+
+Recipe: Funnel Cake
+ID: 86
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Squash Casserole
+ID: 88
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Pound Cake
+ID: 91
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chicken Roll-Ups
+ID: 93
+  - Title 'Chicken Roll-Ups' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+  - Meal type 'lunch' incorrect for 'Chicken Roll-Ups'. Changed to: snack
+
+Recipe: Beef And Spanish Rice Casserole
+ID: 94
+  - Title 'Beef And Spanish Rice Casserole' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Baked Beans
+ID: 95
+  - Ingredients contain beef, pork but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Sweet-N-Sour Chicken
+ID: 96
+  - Title 'Sweet-N-Sour Chicken' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Crazy Peanut Butter Cookies
+ID: 98
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Brickle Bars
+ID: 99
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Pancakes
+ID: 100
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Crustless Vegetable Ham Pie
+ID: 101
+  - Ingredients contain ham, egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: German Potato Salad
+ID: 103
+  - Ingredients contain bacon but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Jan'S Winter Soup
+ID: 104
+  - Ingredients contain beef, turkey, chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Barbecue Noodle Cheese Bake
+ID: 106
+  - Ingredients contain ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Cutout Cookie
+ID: 107
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Ranch Beef And Beans
+ID: 109
+  - Title 'Ranch Beef And Beans' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain beef, ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Crisp Oatmeal Cookies
+ID: 110
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Souper Tuna Crunch
+ID: 111
+  - Title 'Souper Tuna Crunch' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken, tuna but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Cheese-Ham Ball
+ID: 112
+  - Title 'Cheese-Ham Ball' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Cheese Ball
+ID: 113
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Pasta Chicken Salad(268 Calories Per Serving)
+ID: 114
+  - Title 'Pasta Chicken Salad(268 Calories Per Serving)' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain meat, chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Supreme Beef Casserole
+ID: 116
+  - Title 'Supreme Beef Casserole' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chicken Salad
+ID: 117
+  - Title 'Chicken Salad' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chess Pie
+ID: 118
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Cold Spaghetti Salad
+ID: 119
+  - Meal type 'lunch' incorrect for 'Cold Spaghetti Salad'. Changed to: breakfast
+
+Recipe: Chicken Spaghetti
+ID: 121
+  - Title 'Chicken Spaghetti' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Cheese Ball
+ID: 122
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Good Sweet Muffins
+ID: 124
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: St. Joseph'S Zeppole
+ID: 126
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Corn "Oysters"
+ID: 127
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Bright Party Beans
+ID: 128
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chicken Casserole
+ID: 131
+  - Title 'Chicken Casserole' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: French Onion Soup
+ID: 133
+  - Ingredients contain beef, chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Sloppy Joes
+ID: 135
+  - Ingredients contain ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: 7-Up Cake
+ID: 136
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Corned Beef Dip
+ID: 137
+  - Title 'Corned Beef Dip' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain beef but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chocolate Pie
+ID: 138
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Tater Tot Casserole
+ID: 139
+  - Ingredients contain beef, chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Caramel Pie
+ID: 141
+  - Ingredients contain ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Broccoli Cornbread
+ID: 143
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Vegetable Soup
+ID: 144
+  - Ingredients contain beef, turkey but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chocolate Peanut Butter Cake
+ID: 145
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Magic Cookie Bars
+ID: 146
+  - Ingredients contain ham but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: No Bake Pumpkin Pie
+ID: 150
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Baked French Toast
+ID: 151
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+  - Meal type 'breakfast' incorrect for 'Baked French Toast'. Changed to: snack
+
+Recipe: Bonnie'S Bread
+ID: 155
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Chicken Pot Pie
+ID: 156
+  - Title 'Chicken Pot Pie' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Smoked Turkey Risotto
+ID: 157
+  - Title 'Smoked Turkey Risotto' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain chicken but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Eggplant Spaghetti Sauce
+ID: 158
+  - Title 'Eggplant Spaghetti Sauce' contradicts diet tag. Changed to: non-vegetarian
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Watergate Cake
+ID: 159
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Plum Muffins
+ID: 160
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
+Recipe: Sweet Potato Pie
+ID: 162
+  - Ingredients contain egg but tagged as vegetarian. Changed to: non-vegetarian
+
