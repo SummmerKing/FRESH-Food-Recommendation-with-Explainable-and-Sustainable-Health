@@ -28,13 +28,13 @@ try:
 except Exception as e:
     print(f"❌ CRITICAL ERROR IMPORTING METRICS: {e}") 
     METRICS_AVAILABLE = False
-    st.error(f"Error loading metrics: {e}")
 
 # --- IMPORTS FOR LOCAL AGENTS ---
 try:
     from pantry_agent import expand_pantry_item
     from nutrition_agent import nutrition_analysis_agent
 except ImportError:
+    # Fallback if agents are not found locally
     def expand_pantry_item(item): return [item]
     def nutrition_analysis_agent(ctx, query, profile): return {"insight": "Standard Optimization", "recommended_keywords": []}
 
@@ -58,70 +58,54 @@ if "settings" not in st.session_state:
     st.session_state.settings = {"indian_only": False, "num_recs": 3, "time_budget": 45}
 
 # =====================================================================
-# 🧠 NEURO-SYMBOLIC LOGIC & EXPLAINABILITY
+# 🧠 NEURO-SYMBOLIC DISPLAY ENGINE (HUMAN STYLE)
 # =====================================================================
 
-def calculate_shapley_values(neural_score, pantry_score, penalty_val, weights):
-    alpha, beta, lam = weights
-    contributions = {
-        'Taste_Agent': alpha * neural_score,
-        'Pantry_Agent': beta * pantry_score,
-        'Safety_Agent': -1 * (lam * penalty_val)
-    }
-    total_score = (alpha * neural_score) + (beta * pantry_score) - (lam * penalty_val)
-    return contributions, total_score
-
-def get_nutrition_rag_insight(recipe_title, ingredients, nutrition_data):
-    macros = {k.lower(): v for k, v in nutrition_data.items()}
-    p = macros.get('protein', 0)
-    c = macros.get('carbs', 0)
-    f = macros.get('fats', 0)
-    total_mass = p + c + f or 1 
+def generate_human_explanation(rec):
+    narrative = rec.get('explanation_text', 'Optimized based on your preferences.')
+    trace = rec.get('decision_trace', [])
     
-    insight = ""
-    if p / total_mass > 0.30:
-        insight = f"💪 **High Protein ({int(p)}g):** Excellent for muscle repair. "
-    elif f / total_mass > 0.45:
-        insight = f"🥑 **Keto-Friendly ({int(f)}g Fat):** High healthy fats. "
-    elif c / total_mass > 0.60:
-        insight = f"⚡ **Energy Boost ({int(c)}g Carbs):** Good pre-workout. "
-    else:
-        insight = "⚖️ **Balanced Profile:** Good mix for maintenance. "
-
-    title_lower = recipe_title.lower()
-    if "chicken" in title_lower: insight += "Complete lean protein."
-    elif "paneer" in title_lower: insight += "Casein protein source."
-    elif "dal" in title_lower: insight += "Fiber rich."
-    elif "spinach" in title_lower: insight += "High Iron."
+    md = f"### 💡 **Why this?**\n"
+    md += f"> \"{narrative}\"\n\n"
     
-    return insight
-
-def generate_rag_enhanced_explanation(recipe_meta, neural_score, pantry_score, is_violation):
-    weights = (1.0, 1.0, 0.3)
-    penalty_val = 1.0 if is_violation else 0.0
-    shaps, score = calculate_shapley_values(neural_score, pantry_score, penalty_val, weights)
-    
-    nutrition_data = recipe_meta.get('nutrition', {})
-    rag_insight = get_nutrition_rag_insight(recipe_meta['title'], recipe_meta.get('ingredients', []), nutrition_data)
-    
-    md = f"### 🥗 **Analysis: {recipe_meta['title']}**\n"
-    md += f"> {rag_insight}\n\n"
-    md += "**Evaluation Factors:**\n"
-    
-    taste_emoji = "🤤" if shaps['Taste_Agent'] > 0.8 else "😋"
-    md += f"- {taste_emoji} **Taste Match:** `{shaps['Taste_Agent']:.2f}`\n"
-    
-    if shaps['Pantry_Agent'] > 0.5:
-        md += f"- 🎒 **Pantry:** `{shaps['Pantry_Agent']:.2f}` (Uses ingredients)\n"
-    else:
-        md += f"- 🛒 **Pantry:** `{shaps['Pantry_Agent']:.2f}` (Shop needed)\n"
-    
-    if is_violation:
-        md += f"- 🛡️ **Dietary Check:** `{shaps['Safety_Agent']:.2f}` (Penalty Applied)\n"
-    else:
-        md += f"- 🛡️ **Dietary Check:** `+0.00` (Safe)\n"
-
+    if trace:
+        md += "**🕵️ Model Trace:**\n"
+        for step in trace:
+            md += f"- {step}\n"
+            
     return md
+
+def plot_attribution_chart(attribution_data):
+    """
+    Creates a visual bar chart for Taste vs Pantry vs Health
+    """
+    if not attribution_data: return None
+    
+    # Clean data keys for display
+    clean_data = {
+        "Taste": attribution_data.get('taste_contribution', 33),
+        "Pantry": attribution_data.get('pantry_contribution', 33),
+        "Health": attribution_data.get('health_contribution', 33)
+    }
+    
+    df = pd.DataFrame(list(clean_data.items()), columns=['Agent', 'Contribution'])
+    
+    fig = px.bar(
+        df, x='Contribution', y='Agent', orientation='h', 
+        text='Contribution', color='Agent',
+        color_discrete_map={"Taste": "#FF6B6B", "Pantry": "#4ECDC4", "Health": "#45B7D1"}
+    )
+    fig.update_traces(texttemplate='%{text:.1f}%', textposition='inside')
+    fig.update_layout(
+        xaxis_range=[0, 100], 
+        height=120, 
+        margin=dict(l=0, r=0, t=0, b=0),
+        xaxis_title=None, yaxis_title=None,
+        showlegend=False,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)'
+    )
+    return fig
 
 # =====================================================================
 # DATABASE & API HELPERS
@@ -273,49 +257,28 @@ elif menu == "📊 Metrics":
                 k=st.session_state.settings.get("num_recs", 3)
             )
         
-        # 1. Overall Metrics
+        # Metrics Display...
         st.markdown("### 🎯 Overall Performance")
         col1, col2, col3, col4 = st.columns(4)
-        with col1: st.metric("NDCG@3", f"{metrics['overall']['ndcg']:.3f}", help="Ranking Quality")
-        with col2: st.metric("Precision@3", f"{metrics['overall']['precision']:.1%}", help="Relevance")
-        with col3: st.metric("MAP@3", f"{metrics['overall']['map']:.3f}", help="Mean Average Precision")
-        with col4: st.metric("MRR", f"{metrics['overall']['mrr']:.3f}", help="Reciprocal Rank")
+        with col1: st.metric("NDCG@3", f"{metrics['overall']['ndcg']:.3f}")
+        with col2: st.metric("Precision@3", f"{metrics['overall']['precision']:.1%}")
+        with col3: st.metric("MAP@3", f"{metrics['overall']['map']:.3f}")
+        with col4: st.metric("MRR", f"{metrics['overall']['mrr']:.3f}")
         
-        # 2. Safety Dashboard
-        st.markdown("### 🛡️ Safety Analysis")
-        col1, col2 = st.columns(2)
-        with col1: st.metric("Dietary Safety Rate", f"{metrics['overall']['safety_rate']:.1%}", help="Adherence to constraints")
-        with col2: st.metric("Total Recommendations", f"{metrics['overall']['total_recipes']}", delta=f"{metrics['overall']['total_relevant']} relevant")
-        
-        # 3. Per-Meal Data
-        st.markdown("### 📋 Per-Meal Breakdown")
-        meal_data = []
-        for meal, m in metrics['per_meal'].items():
-            meal_data.append({
-                'Meal': meal.title(),
-                'NDCG': f"{m['ndcg']:.3f}",
-                'Precision': f"{m['precision']:.1%}",
-                'MRR': f"{m['mrr']:.3f}",
-                'Relevant': f"{m['num_relevant']}/{m['num_recipes']}"
-            })
-        st.dataframe(pd.DataFrame(meal_data), use_container_width=True, hide_index=True)
-        
-        # 4. Charts
+        # Charts...
         st.markdown("### 📊 Visual Analysis")
         col1, col2 = st.columns(2)
-        
         meal_names = [m.title() for m in metrics['per_meal'].keys()]
         ndcg_vals = [m['ndcg'] for m in metrics['per_meal'].values()]
         prec_vals = [m['precision'] for m in metrics['per_meal'].values()]
         
         with col1:
-            fig = go.Figure([go.Bar(x=meal_names, y=ndcg_vals, marker_color='#FF6B6B', text=[f"{v:.2f}" for v in ndcg_vals], textposition='auto')])
-            fig.update_layout(title="NDCG by Meal", yaxis_range=[0, 1], height=300)
+            fig = go.Figure([go.Bar(x=meal_names, y=ndcg_vals, marker_color='#FF6B6B')])
+            fig.update_layout(title="NDCG by Meal", height=300)
             st.plotly_chart(fig, use_container_width=True)
-            
         with col2:
-            fig = go.Figure([go.Bar(x=meal_names, y=prec_vals, marker_color='#4ECDC4', text=[f"{v:.1%}" for v in prec_vals], textposition='auto')])
-            fig.update_layout(title="Precision by Meal", yaxis_range=[0, 1], height=300)
+            fig = go.Figure([go.Bar(x=meal_names, y=prec_vals, marker_color='#4ECDC4')])
+            fig.update_layout(title="Precision by Meal", height=300)
             st.plotly_chart(fig, use_container_width=True)
 
 # =====================================================================
@@ -373,7 +336,8 @@ elif menu == "Dashboard":
                 else: st.error(res.text)
             except: st.error("Backend offline. Run main.py!")
 
-    # --- DISPLAY LOGIC (FIXED) ---
+    # --- DISPLAY LOGIC (HUMAN STYLE) ---
+    # --- DISPLAY LOGIC (HUMAN STYLE) ---
     if st.session_state.recommendations:
         meals = ["breakfast", "lunch", "dinner"]
         tabs = st.tabs(["Breakfast", "Lunch", "Dinner"])
@@ -384,35 +348,46 @@ elif menu == "Dashboard":
                 if not recs: st.info("No recipes found.")
                 
                 for rec in recs:
-                    with st.expander(f"**{rec['title']}** ({rec['score']:.0%})"):
-                        try:
-                            n_score = rec['score']
-                            p_txt = rec['match_details']['pantry_match_level'].replace('%', '')
-                            p_score = float(p_txt) / 100
-                        except: n_score, p_score = 0.8, 0.5
+                    score_color = "green" if rec['score'] > 0.8 else "orange"
+                    
+                    with st.expander(f"**{rec['title']}** (:{score_color}[{rec['score']:.0%}])"):
                         
-                        is_violation = False
-                        non_veg_keywords = ["chicken", "beef", "pork", "fish", "egg", "ham"]
-                        if "Veg" in diet_label: 
-                             if any(k in rec['title'].lower() for k in non_veg_keywords): is_violation = True
-                        missing = rec.get('missing_ingredients', [])
-                        if missing:
-                            st.warning(f"🛒 **Missing Items:** {', '.join(missing)}")
-                        else:
-                            st.success("✅ You have all main ingredients!")
-                        explanation_md = generate_rag_enhanced_explanation(rec, n_score, p_score, is_violation)
-                        st.markdown(explanation_md)
-
+                        # 1. Main Columns
                         c1, c2 = st.columns([1.5, 1])
+                        
                         with c1:
+                            # EXPLANATION
+                            explanation_md = generate_human_explanation(rec)
+                            st.markdown(explanation_md)
+                            
+                            # MISSING ITEMS
+                            missing = rec.get('missing_ingredients', [])
+                            if missing:
+                                st.warning(f"🛒 **Shop for:** {', '.join(missing)}")
+                            else:
+                                st.success("✅ Fully Pantry Matched!")
+                                
+                            # BADGES
                             matched_tags = rec.get('matched_nutrients', [])
                             if matched_tags:
                                 st.markdown("---")
-                                badges = "".join([f"<span style='background:#dbfbbd;color:#1a5e20;padding:2px 10px;border-radius:12px;margin-right:5px;border:1px solid #1a5e20'>✅ {tag}</span>" for tag in matched_tags])
+                                badges = "".join([f"<span style='background:#dbfbbd;color:#1a5e20;padding:2px 10px;border-radius:12px;margin-right:5px;border:1px solid #1a5e20'>{tag}</span>" for tag in matched_tags])
                                 st.markdown(badges, unsafe_allow_html=True)
-                            if rec.get('link'): st.markdown(f"[View Recipe]({rec['link']})")
                             
                         with c2:
+                            # ATTRIBUTION CHART
+                            st.caption("🤖 **Decision Logic**")
+                            attr_chart = plot_attribution_chart(rec.get('attribution', {}))
+                            if attr_chart:
+                                # ✅ FIXED: Added unique key based on meal and recipe ID
+                                st.plotly_chart(
+                                    attr_chart, 
+                                    use_container_width=True, 
+                                    config={'displayModeBar': False},
+                                    key=f"attr_{m_name}_{rec['recipe_id']}" 
+                                )
+                            
+                            # PIE CHART
                             nd = rec.get('nutrition', {'p':0})
                             st.plotly_chart(
                                 px.pie(values=list(nd.values()), names=list(nd.keys()), hole=0.5), 
@@ -420,29 +395,65 @@ elif menu == "Dashboard":
                                 use_container_width=True
                             )
                             
+                            # ACTION BUTTONS
                             if st.button("🍳 Cook This", key=f"c_{m_name}_{rec['recipe_id']}", use_container_width=True):
                                 send_interaction(user.id, rec['recipe_id'], "cook", rec['title'])
                                 st.toast("Logged & Learned!"); time.sleep(0.5); st.rerun()
+                                
+                        if rec.get('link'): st.caption(f"🔗 [View Full Recipe]({rec['link']})")
 
 # =====================================================================
 # PAGE: HISTORY
 # =====================================================================
 elif menu == "History":
     st.title("📜 Cooking History")
+    
+    # 1. Fetch Data
     h = get_user_history(st.session_state.user.id)
-    if not h: st.info("No history yet.")
-    for x in h:
-        with st.container():
-            c1, c2, c3 = st.columns([3, 1, 1])
-            c1.markdown(f"**{x.get('recipe_title', 'Recipe')}**")
-            c1.caption(x['created_at'][:10])
-            if c2.button("👍 Like", key=f"l_{x['id']}"):
-                send_interaction(st.session_state.user.id, x['recipe_id'], "like")
-                st.success("Liked!")
-            if c3.button("👎 Dislike", key=f"d_{x['id']}"):
-                send_interaction(st.session_state.user.id, x['recipe_id'], "dislike")
-                st.warning("Disliked.")
-            st.divider()
+    
+    if h:
+        # --- HEADER WITH CLEAR BUTTON ---
+        c1, c2 = st.columns([5, 1])
+        with c1:
+            st.caption(f"Found {len(h)} past activities.")
+        with c2:
+            if st.button("🗑️ Clear All", type="primary", use_container_width=True):
+                try:
+                    # 1. Execute Delete
+                    response = supabase.table("interactions").delete().eq("user_id", st.session_state.user.id).execute()
+                    
+                    # 2. Verify Deletion (Check if data was actually returned/deleted)
+                    if response.data and len(response.data) > 0:
+                        st.toast(f"✅ Deleted {len(response.data)} items!")
+                        time.sleep(1)
+                        st.rerun()
+                    else:
+                        # This happens if RLS blocks the delete
+                        st.error("❌ Delete failed. Check Supabase RLS policies.")
+                        
+                except Exception as e:
+                    st.error(f"Error: {e}")
+        
+        st.divider()
+
+        # --- LIST ITEMS ---
+        for x in h:
+            with st.container():
+                c1, c2, c3 = st.columns([3, 1, 1])
+                c1.markdown(f"**{x.get('recipe_title', 'Recipe')}**")
+                c1.caption(x.get('created_at', '')[:10])
+                
+                if c2.button("👍 Like", key=f"l_{x['id']}"):
+                    send_interaction(st.session_state.user.id, x['recipe_id'], "like")
+                    st.toast("Liked!")
+                
+                if c3.button("👎 Dislike", key=f"d_{x['id']}"):
+                    send_interaction(st.session_state.user.id, x['recipe_id'], "dislike")
+                    st.toast("Disliked.")
+                
+                st.divider()
+    else:
+        st.info("No history found.")
 
 # =====================================================================
 # PAGE: LOGOUT
