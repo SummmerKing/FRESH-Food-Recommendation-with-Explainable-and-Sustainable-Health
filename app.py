@@ -9,7 +9,7 @@ import random
 import re
 from supabase import create_client, Client
 import os
-
+from Fresh_metrics import calculate_live_metrics as evaluate_recommendations
 # --- PAGE CONFIGURATION (Must be first) ---
 st.set_page_config(page_title="FRESH: Intelligent Food AI", layout="wide", page_icon="🥑")
 
@@ -54,6 +54,7 @@ if "user" not in st.session_state: st.session_state.user = None
 if "profile" not in st.session_state: st.session_state.profile = {}
 if "pantry" not in st.session_state: st.session_state.pantry = []
 if "recommendations" not in st.session_state: st.session_state.recommendations = {}
+if "nutrition_analysis" not in st.session_state: st.session_state.nutrition_analysis = None  # NEW: Store detailed analysis
 if "settings" not in st.session_state:
     st.session_state.settings = {"indian_only": False, "num_recs": 3, "time_budget": 45}
 
@@ -62,30 +63,42 @@ if "settings" not in st.session_state:
 # =====================================================================
 
 def generate_human_explanation(rec):
-    narrative = rec.get('explanation_text', 'Optimized based on your preferences.')
+    """
+    Renders the LLM narrative and the mathematical trace.
+    """
+    narrative = rec.get('explanation_text', 'Analyzing recipe components...')
     trace = rec.get('decision_trace', [])
     
-    md = f"### 💡 **Why this?**\n"
-    md += f"> \"{narrative}\"\n\n"
+    # 💡 Narrative Block
+    md = f"### 💡 **Chef's Analysis**\n"
+    md += f"*{narrative}*\n\n"
     
+    # 🕵️ Technical Roadmap
     if trace:
-        md += "**🕵️ Model Trace:**\n"
-        for step in trace:
-            md += f"- {step}\n"
+        with st.expander("🕵️ View System Decision Roadmap"):
+            st.caption("How the FRESH Neural Network reached this conclusion:")
+            for step in trace:
+                st.markdown(step)
             
+            # Attribution Quick-view
+            attr = rec.get('attribution', {})
+            st.divider()
+            st.caption("Game-Theoretic Feature Weights (Shapley Values)")
+            cols = st.columns(3)
+            cols[0].metric("Taste", f"+{attr.get('Taste', 0)}%")
+            cols[1].metric("Pantry", f"+{attr.get('Pantry', 0)}%")
+            cols[2].metric("Health", f"+{attr.get('Health', 0)}%")
+
     return md
 
 def plot_attribution_chart(attribution_data):
-    """
-    Creates a visual bar chart for Taste vs Pantry vs Health
-    """
     if not attribution_data: return None
     
-    # Clean data keys for display
+    # ✅ FIX: Match the keys exactly as sent by the backend
     clean_data = {
-        "Taste": attribution_data.get('taste_contribution', 33),
-        "Pantry": attribution_data.get('pantry_contribution', 33),
-        "Health": attribution_data.get('health_contribution', 33)
+        "Taste": attribution_data.get('Taste', 33),
+        "Pantry": attribution_data.get('Pantry', 33),
+        "Health": attribution_data.get('Health', 33)
     }
     
     df = pd.DataFrame(list(clean_data.items()), columns=['Agent', 'Contribution'])
@@ -306,28 +319,51 @@ elif menu == "Dashboard":
     with c1: b_smart = st.button("✨ Smart Generate", use_container_width=True)
     with c2: b_auto = st.button("🔄 Auto Generate", use_container_width=True)
     
-    # --- GENERATION LOGIC ---
+    # --- GENERATION LOGIC (FIXED) ---
     if b_smart or b_auto:
         run_agent = b_smart or (b_auto and q)
         kws = []
         reason = "Standard Optimization"
         bmi_val = prof.get("bmi_data", {}).get("bmi", 22.0)
         
+        # Clear previous analysis when generating new recommendations
+        st.session_state.nutrition_analysis = None
+        
         if run_agent and q:
             with st.spinner("🧬 Dr. FRESH is analyzing..."):
+            # Call the agent
                 nd = nutrition_analysis_agent([], q, {"diet": diet_label, "bmi": bmi_val})
+            
                 kws = nd.get("recommended_keywords", [])
                 reason = nd.get("insight", "Optimized")
-                st.toast(f"Insight: {reason[:40]}...")
+            
+            # ✅ STORE THE FULL ANALYSIS ONCE
+            st.session_state.nutrition_analysis = nd
+            st.toast(f"Insight: {reason[:40]}...")
 
+            # --- 🐛 DEBUG VIEW: SEE WHAT THE AGENT READ ---
+            with st.expander("🐛 Debug: Retrieved RAG Context"):
+                # If your agent returns the context text, show it here. 
+                # Otherwise, this message directs you to the terminal.
+                if "context_used" in nd:
+                    st.text(nd["context_used"])
+                else:
+                    st.warning("Check your terminal logs to see the 'textbook fact'.")
+                    st.info("If the logs show 'Pregnant Adolescents' for a 'Sore Throat' query, the retrieval failed.")
         with st.spinner("🍳 Cooking recommendations..."):
             payload = {
-                "user_id": user.id, "pantry": st.session_state.pantry, "likes": kws,
-                "diet": diet_label, "time_budget": st.session_state.settings["time_budget"],
-                "num_recs": st.session_state.settings["num_recs"],
-                "bmi": float(bmi_val), "regenerate": True, 
-                "indian_only": st.session_state.settings["indian_only"], "query_keywords": kws
-            }
+    "user_id": user.id,
+    "pantry": st.session_state.pantry,
+    "likes": kws,
+    "diet": diet_label,
+    "time_budget": st.session_state.settings["time_budget"],
+    "num_recs": st.session_state.settings["num_recs"],
+    "bmi": float(bmi_val),
+    "regenerate": True,
+    "indian_only": st.session_state.settings["indian_only"],
+    "query_keywords": kws,
+}
+            payload["allergies"] = prof.get("allergies", [])
             try:
                 res = requests.post(f"{API_URL}/generate_meal_plan", json=payload)
                 if res.status_code == 200:
@@ -336,8 +372,26 @@ elif menu == "Dashboard":
                 else: st.error(res.text)
             except: st.error("Backend offline. Run main.py!")
 
-    # --- DISPLAY LOGIC (HUMAN STYLE) ---
-    # --- DISPLAY LOGIC (HUMAN STYLE) ---
+    # ✅ DISPLAY DETAILED NUTRITIONAL ANALYSIS
+    if st.session_state.nutrition_analysis and st.session_state.nutrition_analysis.get("detailed_explanation"):
+        st.markdown("---")
+        st.markdown("### 🩺 Nutritional Consultation")
+        
+        # Show the insight first
+        st.info(f"💡 **Quick Insight:** {st.session_state.nutrition_analysis['insight']}")
+        
+        # Then show detailed analysis in an expander
+        with st.expander("📖 **View Detailed Professional Assessment**", expanded=True):
+            st.markdown(st.session_state.nutrition_analysis["detailed_explanation"])
+        
+        # Show keywords being used
+        keywords = st.session_state.nutrition_analysis.get("recommended_keywords", [])
+        if keywords:
+            st.caption(f"🎯 **Targeted Nutrients:** {', '.join(keywords)}")
+        
+        st.markdown("---")
+
+    # --- DISPLAY LOGIC (RECIPES) ---
     if st.session_state.recommendations:
         meals = ["breakfast", "lunch", "dinner"]
         tabs = st.tabs(["Breakfast", "Lunch", "Dinner"])
@@ -379,7 +433,6 @@ elif menu == "Dashboard":
                             st.caption("🤖 **Decision Logic**")
                             attr_chart = plot_attribution_chart(rec.get('attribution', {}))
                             if attr_chart:
-                                # ✅ FIXED: Added unique key based on meal and recipe ID
                                 st.plotly_chart(
                                     attr_chart, 
                                     use_container_width=True, 
